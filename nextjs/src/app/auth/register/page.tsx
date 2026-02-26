@@ -1,6 +1,6 @@
 'use client';
 
-import {createSPASassClient} from '@/lib/supabase/client';
+import {createSPASaaSClient} from '@/lib/supabase/client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -32,7 +32,7 @@ export default function RegisterPage() {
         setLoading(true);
 
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { error } = await supabase.registerEmail(email, password);
 
             if (error) throw error;

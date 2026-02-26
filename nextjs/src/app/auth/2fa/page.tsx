@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createSPASassClient } from '@/lib/supabase/client';
+import { createSPASaaSClient } from '@/lib/supabase/client';
 import { MFAVerification } from '@/components/MFAVerification';
 
 export default function TwoFactorAuthPage() {
@@ -17,7 +17,7 @@ export default function TwoFactorAuthPage() {
 
     const checkMFAStatus = async () => {
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const client = supabase.getSupabaseClient();
 
             const { data: { user }, error: sessionError } = await client.auth.getUser();

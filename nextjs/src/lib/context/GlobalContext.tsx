@@ -2,7 +2,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { createSPASassClientAuthenticated as createSPASassClient } from '@/lib/supabase/client';
+import { createSPASaaSClientAuthenticated as createSPASaaSClient } from '@/lib/supabase/client';
 
 
 type User = {
@@ -25,7 +25,7 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         async function loadData() {
             try {
-                const supabase = await createSPASassClient();
+                const supabase = await createSPASaaSClient();
                 const client = supabase.getSupabaseClient();
 
                 // Get user data

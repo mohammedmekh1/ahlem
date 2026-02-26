@@ -1,5 +1,5 @@
 import {createBrowserClient} from '@supabase/ssr'
-import {ClientType, SassClient} from "@/lib/supabase/unified";
+import {ClientType, SaaSClient} from "@/lib/supabase/unified";
 import {Database} from "@/lib/types";
 
 export function createSPAClient() {
@@ -9,20 +9,16 @@ export function createSPAClient() {
     )
 }
 
-export async function createSPASassClient() {
+export async function createSPASaaSClient() {
     const client = createSPAClient();
-    // This must be some bug that SupabaseClient is not properly recognized, so must be ignored
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return new SassClient(client as any, ClientType.SPA);
+    return new SaaSClient(client, ClientType.SPA);
 }
 
-export async function createSPASassClientAuthenticated() {
+export async function createSPASaaSClientAuthenticated() {
     const client = createSPAClient();
     const user = await client.auth.getSession();
     if (!user.data || !user.data.session) {
         window.location.href = '/auth/login';
     }
-    // This must be some bug that SupabaseClient is not properly recognized, so must be ignored
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return new SassClient(client as any, ClientType.SPA);
+    return new SaaSClient(client, ClientType.SPA);
 }

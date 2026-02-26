@@ -3,7 +3,7 @@
 import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import {useState} from "react";
-import {createSPASassClient} from "@/lib/supabase/client";
+import {createSPASaaSClient} from "@/lib/supabase/client";
 
 export default function VerifyEmailPage() {
     const [email, setEmail] = useState('');
@@ -20,7 +20,7 @@ export default function VerifyEmailPage() {
         try {
             setLoading(true);
             setError('');
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const {error} = await supabase.resendVerificationEmail(email);
             if(error) {
                 setError(error.message);

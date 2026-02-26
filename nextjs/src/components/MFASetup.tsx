@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { createSPASassClient } from '@/lib/supabase/client';
+import { createSPASaaSClient } from '@/lib/supabase/client';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Key, CheckCircle, XCircle, Loader2 } from 'lucide-react';
@@ -24,7 +24,7 @@ export function MFASetup({ onStatusChange }: MFASetupProps) {
 
     const fetchFactors = async () => {
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { data, error } = await supabase.getSupabaseClient().auth.mfa.listFactors();
 
             if (error) throw error;
@@ -52,7 +52,7 @@ export function MFASetup({ onStatusChange }: MFASetupProps) {
         setActionInProgress(true);
 
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const enrollParams: MFAEnrollTOTPParams = {
                 factorType: 'totp',
                 friendlyName: friendlyName.trim()
@@ -78,7 +78,7 @@ export function MFASetup({ onStatusChange }: MFASetupProps) {
         setActionInProgress(true);
 
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const client = supabase.getSupabaseClient();
 
             const challenge = await client.auth.mfa.challenge({ factorId });
@@ -106,7 +106,7 @@ export function MFASetup({ onStatusChange }: MFASetupProps) {
         setActionInProgress(true);
 
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { error } = await supabase.getSupabaseClient().auth.mfa.unenroll({ factorId });
 
             if (error) throw error;
