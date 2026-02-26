@@ -50,4 +50,10 @@ describe('SaaSClient', () => {
             password: 'password123'
         })
     })
+
+    it('should call from(organizations).select(*) on getOrganizations', async () => {
+        const client = new SaaSClient(mockSupabase, ClientType.SPA)
+        await client.getOrganizations()
+        expect(mockSupabase.from).toHaveBeenCalledWith('organizations')
+    })
 })
