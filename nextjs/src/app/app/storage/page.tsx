@@ -6,7 +6,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Upload, Download, Share2, Trash2, Loader2, FileIcon, AlertCircle, CheckCircle, Copy } from 'lucide-react';
-import { createSPASassClientAuthenticated as createSPASassClient } from '@/lib/supabase/client';
+import { createSPASaaSClientAuthenticated as createSPASaaSClient } from '@/lib/supabase/client';
 import { FileObject } from '@supabase/storage-js';
 
 export default function FileManagementPage() {
@@ -33,7 +33,7 @@ export default function FileManagementPage() {
         try {
             setLoading(true);
             setError('');
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { data, error } = await supabase.getFiles(user!.id);
 
             if (error) throw error;
@@ -53,7 +53,7 @@ export default function FileManagementPage() {
 
             console.log(user)
 
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { error } = await supabase.uploadFile(user!.id!, file.name, file);
 
             if (error) throw error;
@@ -110,7 +110,7 @@ export default function FileManagementPage() {
     const handleDownload = async (filename: string) => {
         try {
             setError('');
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { data, error } = await supabase.shareFile(user!.id!, filename, 60, true);
 
             if (error) throw error;
@@ -125,7 +125,7 @@ export default function FileManagementPage() {
     const handleShare = async (filename: string) => {
         try {
             setError('');
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { data, error } = await supabase.shareFile(user!.id!, filename, 24 * 60 * 60);
 
             if (error) throw error;
@@ -143,7 +143,7 @@ export default function FileManagementPage() {
 
         try {
             setError('');
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { error } = await supabase.deleteFile(user!.id!, fileToDelete);
 
             if (error) throw error;

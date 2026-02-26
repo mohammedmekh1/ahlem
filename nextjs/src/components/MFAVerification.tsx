@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { createSPASassClient } from '@/lib/supabase/client';
+import { createSPASaaSClient } from '@/lib/supabase/client';
 import { CheckCircle, Smartphone } from 'lucide-react';
 import { Factor } from '@supabase/auth-js';
 
@@ -24,7 +24,7 @@ export function MFAVerification({ onVerified }: MFAVerificationProps) {
 
     const loadFactors = async () => {
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { data, error } = await supabase.getSupabaseClient().auth.mfa.listFactors();
 
             if (error) throw error;
@@ -55,7 +55,7 @@ export function MFAVerification({ onVerified }: MFAVerificationProps) {
         setLoading(true);
 
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const client = supabase.getSupabaseClient();
 
             // Create challenge

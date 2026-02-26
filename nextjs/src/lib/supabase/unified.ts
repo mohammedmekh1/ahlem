@@ -7,11 +7,11 @@ export enum ClientType {
 
 }
 
-export class SassClient {
-    private client: SupabaseClient<Database, "public", "public">;
+export class SaaSClient {
+    private client: SupabaseClient<Database, "public">;
     private clientType: ClientType;
 
-    constructor(client: SupabaseClient<Database, "public", "public">, clientType: ClientType) {
+    constructor(client: SupabaseClient<Database, "public">, clientType: ClientType) {
         this.client = client;
         this.clientType = clientType;
 

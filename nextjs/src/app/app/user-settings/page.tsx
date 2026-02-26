@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useGlobal } from '@/lib/context/GlobalContext';
-import { createSPASassClientAuthenticated as createSPASassClient } from '@/lib/supabase/client';
+import { createSPASaaSClientAuthenticated as createSPASaaSClient } from '@/lib/supabase/client';
 import { Key, User, CheckCircle } from 'lucide-react';
 import { MFASetup } from '@/components/MFASetup';
 
@@ -29,7 +29,7 @@ export default function UserSettingsPage() {
         setSuccess('');
 
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const client = supabase.getSupabaseClient();
 
             const { error } = await client.auth.updateUser({

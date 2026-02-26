@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGlobal } from '@/lib/context/GlobalContext';
 import {
-    createSPASassClientAuthenticated as createSPASassClient
+    createSPASaaSClientAuthenticated as createSPASaaSClient
 } from '@/lib/supabase/client';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -44,7 +44,7 @@ function CreateTaskDialog({ onTaskCreated }: CreateTaskDialogProps) {
 
         try {
             setLoading(true);
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const newTask: NewTask = {
                 title: newTaskTitle.trim(),
                 description: newTaskDescription.trim() || null,
@@ -150,7 +150,7 @@ export default function TaskManagementPage() {
             const isFirstLoad = initialLoading;
             if (!isFirstLoad) setLoading(true);
 
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { data, error: supabaseError } = await supabase.getMyTodoList(1, 100, 'created_at', filter);
 
             if (supabaseError) throw supabaseError;
@@ -166,7 +166,7 @@ export default function TaskManagementPage() {
 
     const handleRemoveTask = async (id: number): Promise<void> => {
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { error: supabaseError } = await supabase.removeTask(id);
             if (supabaseError) throw supabaseError;
             await loadTasks();
@@ -178,7 +178,7 @@ export default function TaskManagementPage() {
 
     const handleMarkAsDone = async (id: number): Promise<void> => {
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { error: supabaseError } = await supabase.updateAsDone(id);
             if (supabaseError) throw supabaseError;
             setShowConfetti(true);

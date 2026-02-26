@@ -12,7 +12,7 @@ import {
     Key, Files, LucideListTodo,
 } from 'lucide-react';
 import { useGlobal } from "@/lib/context/GlobalContext";
-import { createSPASassClient } from "@/lib/supabase/client";
+import { createSPASaaSClient } from "@/lib/supabase/client";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
     const handleLogout = async () => {
         try {
-            const client = await createSPASassClient();
+            const client = await createSPASaaSClient();
             await client.logout();
         } catch (error) {
             console.error('Error logging out:', error);

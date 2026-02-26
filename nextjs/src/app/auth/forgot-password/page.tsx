@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { createSPASassClient } from '@/lib/supabase/client';
+import { createSPASaaSClient } from '@/lib/supabase/client';
 import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
 
@@ -17,7 +17,7 @@ export default function ForgotPasswordPage() {
         setLoading(true);
 
         try {
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { error } = await supabase.getSupabaseClient().auth.resetPasswordForEmail(email, {
                 redirectTo: `${window.location.origin}/auth/reset-password`,
             });
