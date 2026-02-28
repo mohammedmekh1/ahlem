@@ -1,56 +1,61 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Globe, Shield, Users, Key, Database, Clock } from 'lucide-react';
+import { ArrowRight, Shield, Users, Database, Clock, Brain, Globe, Smartphone } from 'lucide-react';
 import AuthAwareButtons from '@/components/AuthAwareButtons';
 import HomePricing from "@/components/HomePricing";
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
+  const { t } = useTranslation();
   const productName = process.env.NEXT_PUBLIC_PRODUCTNAME;
 
   const features = [
     {
       icon: Shield,
-      title: 'Robust Authentication',
-      description: 'Secure login with email/password, Multi-Factor Authentication, and SSO providers',
-      color: 'text-green-600'
+      title: t('robust_auth', 'Authentication'),
+      description: t('robust_auth_desc', 'Secure login with MFA and SSO'),
+      color: 'text-blue-600'
     },
     {
-      icon: Database,
-      title: 'File Management',
-      description: 'Built-in file storage with secure sharing, downloads, and granular permissions',
-      color: 'text-orange-600'
+      icon: Brain,
+      title: t('ai_correction', 'AI Correction'),
+      description: t('ai_desc', 'Automatically create and correct questions with AI'),
+      color: 'text-indigo-600'
     },
     {
       icon: Users,
-      title: 'User Settings',
-      description: 'Complete user management with password updates, MFA setup, and profile controls',
-      color: 'text-red-600'
+      title: t('admin_panel', 'Admin Control'),
+      description: t('admin_desc', 'Manage users, permissions and platform settings'),
+      color: 'text-sky-600'
+    },
+    {
+      icon: Database,
+      title: t('storage', 'Secure Storage'),
+      description: t('storage_desc', 'Integrated file management and sharing'),
+      color: 'text-blue-500'
     },
     {
       icon: Clock,
-      title: 'Task Management',
-      description: 'Built-in todo system with real-time updates and priority management',
-      color: 'text-teal-600'
+      title: t('productivity', 'Productivity'),
+      description: t('productivity_desc', 'Advanced task management system'),
+      color: 'text-blue-400'
     },
     {
-      icon: Globe,
-      title: 'Legal Documents',
-      description: 'Pre-configured privacy policy, terms of service, and refund policy pages',
-      color: 'text-purple-600'
-    },
-    {
-      icon: Key,
-      title: 'Cookie Consent',
-      description: 'GDPR-compliant cookie consent system with customizable preferences',
-      color: 'text-blue-600'
+      icon: Smartphone,
+      title: t('mobile_ready', 'Mobile Ready'),
+      description: t('mobile_desc', 'Complete Expo template for mobile devices'),
+      color: 'text-blue-700'
     }
   ];
 
   const stats = [
-    { label: 'Active Users', value: '10K+' },
-    { label: 'Organizations', value: '2K+' },
-    { label: 'Countries', value: '50+' },
-    { label: 'Uptime', value: '99.9%' }
+    { label: t('active_users', 'Users'), value: '0' },
+    { label: t('location', 'Location'), value: 'Algeria' },
+    { label: t('uptime', 'Uptime'), value: '99.9%' },
+    { label: t('support', 'Support'), value: '24/7' }
   ];
 
   return (
@@ -65,11 +70,11 @@ export default function Home() {
               </div>
               <div className="hidden md:flex items-center space-x-8">
                 <Link href="#features" className="text-gray-600 hover:text-gray-900">
-                  Features
+                  {t('features')}
                 </Link>
 
                 <Link href="#pricing" className="text-gray-600 hover:text-gray-900">
-                  Pricing
+                  {t('pricing')}
                 </Link>
                 <Link
                     href="https://github.com/Razikus/supabase-nextjs-template"
@@ -90,6 +95,7 @@ export default function Home() {
                 </Link>
 
                 <AuthAwareButtons variant="nav" />
+                <LanguageSwitcher />
               </div>
             </div>
           </div>
@@ -99,15 +105,33 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-                Bootstrap Your SaaS
-                <span className="block text-primary-600">In 5 minutes</span>
+                {t('hero_title')}
+                <span className="block text-primary-600 mt-2">{t('welcome')}</span>
               </h1>
               <p className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
-                Launch your SaaS product in days, not months. Complete with authentication and enterprise-grade security built right in.
+                {t('hero_subtitle')}
               </p>
               <div className="mt-10 flex gap-4 justify-center">
 
                 <AuthAwareButtons />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Founders Section */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold mb-8">{t('founders')}</h2>
+              <div className="flex justify-center">
+                <div className="flex flex-col items-center">
+                  <div className="w-24 h-24 rounded-full bg-primary-100 flex items-center justify-center mb-4">
+                    <Users className="h-12 w-12 text-primary-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold">أحلام</h3>
+                  <p className="text-gray-500">{t('teacher')}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -172,6 +196,10 @@ export default function Home() {
 
         <footer className="bg-gray-50 border-t border-gray-200">
           <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 border-b pb-8">
+              <h4 className="text-sm font-semibold text-gray-900 mb-4">{t('location')}</h4>
+              <p className="text-gray-600 italic">الجزائر</p>
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div>
                 <h4 className="text-sm font-semibold text-gray-900">Product</h4>

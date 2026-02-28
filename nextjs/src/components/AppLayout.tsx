@@ -45,9 +45,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     const productName = process.env.NEXT_PUBLIC_PRODUCTNAME;
 
     const navigation = [
-        { name: 'Homepage', href: '/app', icon: Home },
-        { name: 'Example Storage', href: '/app/storage', icon: Files },
-        { name: 'Example Table', href: '/app/table', icon: LucideListTodo },
+        { name: 'Dashboard', href: '/app', icon: Home },
+        { name: 'AI Assistant', href: '/app/ai', icon: LucideListTodo },
+        { name: 'Storage', href: '/app/storage', icon: Files },
         { name: 'User Settings', href: '/app/user-settings', icon: User },
     ];
 
@@ -112,7 +112,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                         <Menu className="h-6 w-6"/>
                     </button>
 
-                    <div className="relative ml-auto">
+                    <div className="relative ml-auto flex items-center gap-4">
+                        <LanguageSwitcher />
                         <button
                             onClick={() => setUserDropdownOpen(!isUserDropdownOpen)}
                             className="flex items-center space-x-2 text-sm text-gray-700 hover:text-gray-900"
