@@ -8,8 +8,10 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Upload, Download, Share2, Trash2, Loader2, FileIcon, AlertCircle, CheckCircle, Copy } from 'lucide-react';
 import { createSPASaaSClientAuthenticated as createSPASaaSClient } from '@/lib/supabase/client';
 import { FileObject } from '@supabase/storage-js';
+import { useTranslation } from 'react-i18next';
 
 export default function FileManagementPage() {
+    const { t } = useTranslation();
     const { user } = useGlobal();
     const [files, setFiles] = useState<FileObject[]>([]);
     const [uploading, setUploading] = useState(false);
@@ -175,8 +177,8 @@ export default function FileManagementPage() {
         <div className="space-y-6 p-6">
             <Card>
                 <CardHeader>
-                    <CardTitle>File Management</CardTitle>
-                    <CardDescription>Upload, download, and share your files</CardDescription>
+                    <CardTitle>{t('file_management')}</CardTitle>
+                    <CardDescription>{t('upload_desc')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                     {error && (
@@ -206,12 +208,12 @@ export default function FileManagementPage() {
                             onDrop={handleDrop}
                         >
                             <Upload className="w-8 h-8"/>
-                            <span className="mt-2 text-base">
+                            <span className="mt-2 text-base text-center">
                                 {uploading
-                                    ? 'Uploading...'
+                                    ? t('uploading')
                                     : isDragging
-                                        ? 'Drop your file here'
-                                        : 'Drag and drop or click to select a file (max 50mb)'}
+                                        ? t('drop_file')
+                                        : t('drop_file')}
                             </span>
                             <input
                                 type="file"
@@ -229,7 +231,7 @@ export default function FileManagementPage() {
                             </div>
                         )}
                         {files.length === 0 ? (
-                            <p className="text-center text-gray-500">No files uploaded yet</p>
+                            <p className="text-center text-gray-500">{t('no_files')}</p>
                         ) : (
                             files.map((file) => (
                                 <div
@@ -310,15 +312,15 @@ export default function FileManagementPage() {
                     <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
                         <AlertDialogContent>
                             <AlertDialogHeader>
-                                <AlertDialogTitle>Delete File</AlertDialogTitle>
+                                <AlertDialogTitle>{t('delete_file')}</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                    Are you sure you want to delete this file? This action cannot be undone.
+                                    {t('delete_confirm')}
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
                                 <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
-                                    Delete
+                                    {t('delete')}
                                 </AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>

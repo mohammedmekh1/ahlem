@@ -49,6 +49,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         { name: 'AI Assistant', href: '/app/ai', icon: LucideListTodo },
         { name: 'Storage', href: '/app/storage', icon: Files },
         { name: 'User Settings', href: '/app/user-settings', icon: User },
+        { name: 'Admin Panel', href: '/admin', icon: Shield },
     ];
 
     const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
