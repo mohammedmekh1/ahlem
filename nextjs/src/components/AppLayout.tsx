@@ -9,9 +9,10 @@ import {
     X,
     ChevronDown,
     LogOut,
-    Key, Files, LucideListTodo,
+    Key, Files, LucideListTodo, Shield,
 } from 'lucide-react';
 import { useGlobal } from "@/lib/context/GlobalContext";
+import { LanguageSwitcher } from './LanguageSwitcher';
 import { createSPASaaSClient } from "@/lib/supabase/client";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {

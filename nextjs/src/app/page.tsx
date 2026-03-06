@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Shield, Users, Database, Clock, Brain, Globe, Smartphone } from 'lucide-react';
+import { ArrowRight, Shield, Users, Database, Clock, Brain, Smartphone } from 'lucide-react';
 import AuthAwareButtons from '@/components/AuthAwareButtons';
 import HomePricing from "@/components/HomePricing";
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';

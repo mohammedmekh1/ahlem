@@ -8,10 +8,12 @@ export enum ClientType {
 }
 
 export class SaaSClient {
-    private client: SupabaseClient<Database, "public">;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    private client: SupabaseClient<Database, "public", any>;
     private clientType: ClientType;
 
-    constructor(client: SupabaseClient<Database, "public">, clientType: ClientType) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    constructor(client: SupabaseClient<Database, "public", any>, clientType: ClientType) {
         this.client = client;
         this.clientType = clientType;
 
