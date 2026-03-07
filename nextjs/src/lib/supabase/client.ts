@@ -3,7 +3,7 @@ import {ClientType, SaaSClient} from "@/lib/supabase/unified";
 import {Database} from "@/lib/types";
 
 export function createSPAClient() {
-    return createBrowserClient<Database, "public", Database["public"]>(
+    return createBrowserClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
