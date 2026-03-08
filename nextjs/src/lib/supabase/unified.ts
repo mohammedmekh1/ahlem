@@ -103,7 +103,8 @@ export class SaaSClient {
         return query
     }
 
-    async createTask(row: Database["public"]["Tables"]["todo_list"]["Insert"]) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async createTask(row: any) {
         return this.client.from('todo_list').insert(row)
     }
 
