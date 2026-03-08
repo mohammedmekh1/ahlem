@@ -1,7 +1,7 @@
 // src/app/auth/login/page.tsx
 'use client';
 
-import { createSPASassClient } from '@/lib/supabase/client';
+import { createSPASaaSClient } from '@/lib/supabase/client';
 import {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -21,7 +21,7 @@ export default function LoginPage() {
         setLoading(true);
 
         try {
-            const client = await createSPASassClient();
+            const client = await createSPASaaSClient();
             const { error: signInError } = await client.loginEmail(email, password);
 
             if (signInError) throw signInError;

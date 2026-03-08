@@ -153,17 +153,17 @@
 }
 
 .theme-sass3 {
-    /* Primary colors - Ocean Blues */
-    --color-primary-50: #f0f9ff;
-    --color-primary-100: #e0f7ff;
-    --color-primary-200: #b9ecff;
-    --color-primary-300: #7dd5f5;
-    --color-primary-400: #38b7e8;
-    --color-primary-500: #0c98d0;
-    --color-primary-600: #0887c2;
-    --color-primary-700: #0670a3;
-    --color-primary-800: #065b86;
-    --color-primary-900: #074563;
+    /* Primary colors - Royal Blues */
+    --color-primary-50: #f0f4ff;
+    --color-primary-100: #dbe4ff;
+    --color-primary-200: #bac8ff;
+    --color-primary-300: #91a7ff;
+    --color-primary-400: #748ffc;
+    --color-primary-500: #5c7cfa;
+    --color-primary-600: #4c6ef5;
+    --color-primary-700: #4263eb;
+    --color-primary-800: #3b5bdb;
+    --color-primary-900: #364fc7;
 
     /* Secondary colors - Sandy Neutrals */
     --color-secondary-50: #fdfcfb;

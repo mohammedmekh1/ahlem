@@ -1,12 +1,12 @@
 import {createServerClient} from '@supabase/ssr'
 import {cookies} from 'next/headers'
-import {ClientType, SassClient} from "@/lib/supabase/unified";
+import {ClientType, SaaSClient} from "@/lib/supabase/unified";
 import {Database} from "@/lib/types";
 
 export async function createSSRClient() {
     const cookieStore = await cookies()
 
-    return createServerClient<Database, "public", Database["public"]>(
+    return createServerClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
         {
@@ -32,9 +32,7 @@ export async function createSSRClient() {
 
 
 
-export async function createSSRSassClient() {
+export async function createSSRSaaSClient() {
     const client = await createSSRClient();
-    // This must be some bug that SupabaseClient is not properly recognized, so must be ignored
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return new SassClient(client as any, ClientType.SERVER);
+    return new SaaSClient(client as any, ClientType.SERVER);
 }

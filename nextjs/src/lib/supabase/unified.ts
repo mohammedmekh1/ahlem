@@ -1,4 +1,3 @@
-import {SupabaseClient} from "@supabase/supabase-js";
 import {Database} from "@/lib/types";
 
 export enum ClientType {
@@ -7,11 +6,13 @@ export enum ClientType {
 
 }
 
-export class SassClient {
-    private client: SupabaseClient<Database, "public", "public">;
+export class SaaSClient {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    private client: any;
     private clientType: ClientType;
 
-    constructor(client: SupabaseClient<Database, "public", "public">, clientType: ClientType) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    constructor(client: any, clientType: ClientType) {
         this.client = client;
         this.clientType = clientType;
 
@@ -75,10 +76,29 @@ export class SassClient {
 
     }
 
-    async getMyTodoList(page: number = 1, pageSize: number = 100, order: string = 'created_at', done: boolean | null = false) {
+    async getOrganizations() {
+        return this.client.from('organizations').select('*');
+    }
+
+    async createOrganization(name: string, slug: string, ownerId: string) {
+        return this.client.from('organizations').insert({
+            name,
+            slug,
+            owner_id: ownerId
+        });
+    }
+
+    async getOrganizationMembers(orgId: string) {
+        return this.client.from('organization_members').select('*').eq('organization_id', orgId);
+    }
+
+    async getMyTodoList(page: number = 1, pageSize: number = 100, order: string = 'created_at', done: boolean | null = false, orgId?: string) {
         let query = this.client.from('todo_list').select('*').range(page * pageSize - pageSize, page * pageSize - 1).order(order)
         if (done !== null) {
             query = query.eq('done', done)
+        }
+        if (orgId) {
+            query = query.eq('org_id', orgId)
         }
         return query
     }

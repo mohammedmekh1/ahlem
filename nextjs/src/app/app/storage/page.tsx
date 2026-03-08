@@ -6,10 +6,12 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Upload, Download, Share2, Trash2, Loader2, FileIcon, AlertCircle, CheckCircle, Copy } from 'lucide-react';
-import { createSPASassClientAuthenticated as createSPASassClient } from '@/lib/supabase/client';
+import { createSPASaaSClientAuthenticated as createSPASaaSClient } from '@/lib/supabase/client';
 import { FileObject } from '@supabase/storage-js';
+import { useTranslation } from 'react-i18next';
 
 export default function FileManagementPage() {
+    const { t } = useTranslation();
     const { user } = useGlobal();
     const [files, setFiles] = useState<FileObject[]>([]);
     const [uploading, setUploading] = useState(false);
@@ -33,7 +35,7 @@ export default function FileManagementPage() {
         try {
             setLoading(true);
             setError('');
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { data, error } = await supabase.getFiles(user!.id);
 
             if (error) throw error;
@@ -53,7 +55,7 @@ export default function FileManagementPage() {
 
             console.log(user)
 
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { error } = await supabase.uploadFile(user!.id!, file.name, file);
 
             if (error) throw error;
@@ -110,7 +112,7 @@ export default function FileManagementPage() {
     const handleDownload = async (filename: string) => {
         try {
             setError('');
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { data, error } = await supabase.shareFile(user!.id!, filename, 60, true);
 
             if (error) throw error;
@@ -125,7 +127,7 @@ export default function FileManagementPage() {
     const handleShare = async (filename: string) => {
         try {
             setError('');
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { data, error } = await supabase.shareFile(user!.id!, filename, 24 * 60 * 60);
 
             if (error) throw error;
@@ -143,7 +145,7 @@ export default function FileManagementPage() {
 
         try {
             setError('');
-            const supabase = await createSPASassClient();
+            const supabase = await createSPASaaSClient();
             const { error } = await supabase.deleteFile(user!.id!, fileToDelete);
 
             if (error) throw error;
@@ -175,8 +177,8 @@ export default function FileManagementPage() {
         <div className="space-y-6 p-6">
             <Card>
                 <CardHeader>
-                    <CardTitle>File Management</CardTitle>
-                    <CardDescription>Upload, download, and share your files</CardDescription>
+                    <CardTitle>{t('file_management')}</CardTitle>
+                    <CardDescription>{t('upload_desc')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                     {error && (
@@ -206,12 +208,12 @@ export default function FileManagementPage() {
                             onDrop={handleDrop}
                         >
                             <Upload className="w-8 h-8"/>
-                            <span className="mt-2 text-base">
+                            <span className="mt-2 text-base text-center">
                                 {uploading
-                                    ? 'Uploading...'
+                                    ? t('uploading')
                                     : isDragging
-                                        ? 'Drop your file here'
-                                        : 'Drag and drop or click to select a file (max 50mb)'}
+                                        ? t('drop_file')
+                                        : t('drop_file')}
                             </span>
                             <input
                                 type="file"
@@ -229,7 +231,7 @@ export default function FileManagementPage() {
                             </div>
                         )}
                         {files.length === 0 ? (
-                            <p className="text-center text-gray-500">No files uploaded yet</p>
+                            <p className="text-center text-gray-500">{t('no_files')}</p>
                         ) : (
                             files.map((file) => (
                                 <div
@@ -310,15 +312,15 @@ export default function FileManagementPage() {
                     <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
                         <AlertDialogContent>
                             <AlertDialogHeader>
-                                <AlertDialogTitle>Delete File</AlertDialogTitle>
+                                <AlertDialogTitle>{t('delete_file')}</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                    Are you sure you want to delete this file? This action cannot be undone.
+                                    {t('delete_confirm')}
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
                                 <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
-                                    Delete
+                                    {t('delete')}
                                 </AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
