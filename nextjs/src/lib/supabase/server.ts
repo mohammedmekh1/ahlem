@@ -6,7 +6,7 @@ import {Database} from "@/lib/types";
 export async function createSSRClient() {
     const cookieStore = await cookies()
 
-    return createServerClient<Database, "public", Database["public"]>(
+    return createServerClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
         {
@@ -34,5 +34,5 @@ export async function createSSRClient() {
 
 export async function createSSRSaaSClient() {
     const client = await createSSRClient();
-    return new SaaSClient(client, ClientType.SERVER);
+    return new SaaSClient(client as any, ClientType.SERVER);
 }

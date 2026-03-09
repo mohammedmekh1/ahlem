@@ -9,9 +9,10 @@ import {
     X,
     ChevronDown,
     LogOut,
-    Key, Files, LucideListTodo,
+    Key, Files, LucideListTodo, Shield,
 } from 'lucide-react';
 import { useGlobal } from "@/lib/context/GlobalContext";
+import { LanguageSwitcher } from './LanguageSwitcher';
 import { createSPASaaSClient } from "@/lib/supabase/client";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -45,10 +46,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     const productName = process.env.NEXT_PUBLIC_PRODUCTNAME;
 
     const navigation = [
-        { name: 'Homepage', href: '/app', icon: Home },
-        { name: 'Example Storage', href: '/app/storage', icon: Files },
-        { name: 'Example Table', href: '/app/table', icon: LucideListTodo },
+        { name: 'Dashboard', href: '/app', icon: Home },
+        { name: 'AI Assistant', href: '/app/ai', icon: LucideListTodo },
+        { name: 'Storage', href: '/app/storage', icon: Files },
         { name: 'User Settings', href: '/app/user-settings', icon: User },
+        { name: 'Admin Panel', href: '/admin', icon: Shield },
     ];
 
     const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
@@ -112,7 +114,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                         <Menu className="h-6 w-6"/>
                     </button>
 
-                    <div className="relative ml-auto">
+                    <div className="relative ml-auto flex items-center gap-4">
+                        <LanguageSwitcher />
                         <button
                             onClick={() => setUserDropdownOpen(!isUserDropdownOpen)}
                             className="flex items-center space-x-2 text-sm text-gray-700 hover:text-gray-900"

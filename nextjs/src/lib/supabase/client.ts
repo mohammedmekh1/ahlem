@@ -3,7 +3,7 @@ import {ClientType, SaaSClient} from "@/lib/supabase/unified";
 import {Database} from "@/lib/types";
 
 export function createSPAClient() {
-    return createBrowserClient<Database, "public", Database["public"]>(
+    return createBrowserClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
@@ -11,7 +11,7 @@ export function createSPAClient() {
 
 export async function createSPASaaSClient() {
     const client = createSPAClient();
-    return new SaaSClient(client, ClientType.SPA);
+    return new SaaSClient(client as any, ClientType.SPA);
 }
 
 export async function createSPASaaSClientAuthenticated() {
@@ -20,5 +20,5 @@ export async function createSPASaaSClientAuthenticated() {
     if (!user.data || !user.data.session) {
         window.location.href = '/auth/login';
     }
-    return new SaaSClient(client, ClientType.SPA);
+    return new SaaSClient(client as any, ClientType.SPA);
 }

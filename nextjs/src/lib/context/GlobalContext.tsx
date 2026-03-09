@@ -9,6 +9,7 @@ type User = {
     email: string;
     id: string;
     registered_at: Date;
+    is_admin?: boolean;
 };
 
 interface GlobalContextType {
@@ -31,10 +32,17 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
                 // Get user data
                 const { data: { user } } = await client.auth.getUser();
                 if (user) {
+                    const { data: profile } = await client
+                        .from('profiles')
+                        .select('is_admin')
+                        .eq('id', user.id)
+                        .single();
+
                     setUser({
                         email: user.email!,
                         id: user.id,
-                        registered_at: new Date(user.created_at)
+                        registered_at: new Date(user.created_at),
+                        is_admin: profile?.is_admin || false
                     });
                 } else {
                     throw new Error('User not found');

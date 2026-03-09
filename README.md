@@ -7,6 +7,13 @@ A production-ready SaaS template built with Next.js 15, Supabase, and Tailwind C
 > https://youtube.com/shorts/qcASa0Ywsy4?feature=share
 
 
+## 🇸🇦 Arabic Documentation Available
+
+[الدليل العربي](./README_AR.md)
+
+This repository includes a comprehensive getting started guide in Arabic:
+- **README_AR.md** - Complete step-by-step guide from scratch to production.
+
 ## 🇨🇳 Chinese Documentation Available
 
 [中文文档](./README_ZH.md) | [移动端中文文档](./README_MOBILE_ZH.md)
@@ -68,6 +75,11 @@ We are no longer able to modify auth schema. I modified original migrations to r
     - Filtering and sorting
     - Row-level security
 
+- **Organization & Multi-tenancy**
+    - Create and manage organizations
+    - Role-based access within organizations
+    - Filter resources by organization
+
 - **Security**
     - Row Level Security (RLS) policies
     - Secure file storage policies
@@ -77,8 +89,9 @@ We are no longer able to modify auth schema. I modified original migrations to r
 - **UI/UX**
     - Modern, responsive design
     - Dark mode support
+    - Interactive Dashboard with Recharts
     - Loading states
-    - Error handling
+    - Global Error and 404 pages
     - Toast notifications
     - Confetti animations
 
@@ -107,6 +120,12 @@ We are no longer able to modify auth schema. I modified original migrations to r
     - Supabase Auth
     - MFA support
     - OAuth providers
+
+- **Testing & Monitoring**
+    - Unit testing with Vitest
+    - E2E testing with Playwright
+    - Production monitoring with Sentry
+    - Automated CI with GitHub Actions
 
 ## 📦 Getting Started - local dev
 
