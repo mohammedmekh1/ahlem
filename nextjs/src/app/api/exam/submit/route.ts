@@ -51,6 +51,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to save exam results" }, { status: 500 });
   }
 
+  // 3.5 Persist individual responses
+  const responseInserts = Object.entries(answers).map(([qId, ans]) => ({
+    exam_id,
+    candidate_id,
+    question_id: qId,
+    answer: ans as string
+  }));
+
+  await supabase.from("student_responses").insert(responseInserts);
+
   // 4. Update candidate status
   await supabase
     .from("candidates")
