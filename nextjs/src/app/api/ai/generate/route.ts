@@ -20,9 +20,22 @@ export async function POST(req: Request) {
 
   try {
     apiKey = decrypt(apiKey);
-    const prompt = `Generate ${count || 5} exam questions based on this description: ${description}.
-    Difficulty level: ${difficulty || 'medium'}.
-    Return as a JSON array of objects with fields: content (the question), type (mcq, true_false, essay), options (array of strings if mcq), correct_answer, explanation.`;
+    const prompt = `أنت خبير في إنشاء الاختبارات التعليمية. قم بإنشاء ${count || 5} سؤالاً بناءً على الوصف التالي: ${description}.
+    مستوى الصعوبة: ${difficulty || 'medium'}.
+
+    المتطلبات:
+    1. يجب أن تكون الأسئلة باللغة العربية (إلا إذا كان المحتوى يتطلب لغة أخرى).
+    2. أنواع الأسئلة المتاحة: اختيار من متعدد (mcq)، صح وخطأ (true_false)، مقالي (essay).
+    3. بالنسبة لأسئلة الاختيار من متعدد، قدم 4 خيارات.
+
+    الرد يجب أن يكون بصيغة JSON فقط كصفوف مصفوفة (JSON array) تحتوي على الكائنات التالية:
+    - content: نص السؤال
+    - type: نوع السؤال (mcq, true_false, essay)
+    - options: مصفوفة من السلاسل النصية للخيارات (فقط لنوع mcq)
+    - correct_answer: الإجابة الصحيحة
+    - explanation: شرح بسيط للإجابة.
+
+    تأكد من إرجاع JSON صالح فقط.`;
 
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
       method: 'POST',
@@ -35,11 +48,22 @@ export async function POST(req: Request) {
     const result = await response.json();
     const generatedText = result.candidates[0].content.parts[0].text;
 
-    // Clean JSON from markdown if present
-    const cleanJson = generatedText.replace(/```json|```/g, '').trim();
-    const questions = JSON.parse(cleanJson);
+    // Robust JSON cleaning
+    let cleanJson = generatedText;
+    const jsonMatch = generatedText.match(/\[[\s\S]*\]/);
+    if (jsonMatch) {
+      cleanJson = jsonMatch[0];
+    } else {
+      cleanJson = generatedText.replace(/```json|```/g, '').trim();
+    }
 
-    return NextResponse.json({ questions });
+    try {
+      const questions = JSON.parse(cleanJson);
+      return NextResponse.json({ questions });
+    } catch (parseError: any) {
+      console.error("AI JSON Parse Error:", parseError, "Generated Text:", generatedText);
+      return NextResponse.json({ error: "فشل في معالجة الأسئلة المولدة. يرجى المحاولة مرة أخرى." }, { status: 500 });
+    }
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

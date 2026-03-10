@@ -69,17 +69,32 @@ export default function ExamsPage() {
     }
   };
 
+  const generateUniqueLink = async (examId: string) => {
+    const slug = Math.random().toString(36).substring(2, 8);
+    const { error } = await supabase
+      .from('exams')
+      .update({ unique_slug: slug })
+      .eq('id', examId);
+
+    if (!error) {
+      setExams(exams.map(e => e.id === examId ? { ...e, unique_slug: slug } : e));
+      toast.success('تم توليد الرابط الفريد');
+    }
+  };
+
   const handleCreateExam = async (e: React.FormEvent) => {
     e.preventDefault();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
+    const slug = Math.random().toString(36).substring(2, 8);
     const { data, error } = await supabase
       .from('exams')
       .insert({
         title: newExamTitle,
         organization_id: selectedOrg,
-        created_by: user.id
+        created_by: user.id,
+        unique_slug: slug
       })
       .select()
       .single();
@@ -124,9 +139,18 @@ export default function ExamsPage() {
             <CardHeader>
               <CardTitle>{exam.title}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-2">
               <p className="text-sm text-gray-500">أنشئ في: {new Date(exam.created_at).toLocaleDateString()}</p>
-              <Button variant="outline" size="sm" className="mt-2" onClick={() => setSelectedExamId(exam.id)}>
+
+              {exam.unique_slug ? (
+                <div className="p-2 bg-blue-50 border border-blue-100 rounded text-xs break-all">
+                  رابط الطالب: <span className="font-mono text-blue-700">{window.location.origin}/exam/{exam.unique_slug}</span>
+                </div>
+              ) : (
+                <Button variant="secondary" size="sm" onClick={() => generateUniqueLink(exam.id)}>توليد رابط</Button>
+              )}
+
+              <Button variant="outline" size="sm" className="w-full" onClick={() => setSelectedExamId(exam.id)}>
                 إدارة الأسئلة
               </Button>
             </CardContent>
