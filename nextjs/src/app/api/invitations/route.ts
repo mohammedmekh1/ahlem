@@ -18,8 +18,8 @@ export async function POST(req: Request) {
     .from("invitations")
     .insert({
       email,
-      organization_id,
-      role,
+      organization_id: organization_id || undefined,
+      role: role || 'member',
       inviter_id: user.id,
       token,
     })
