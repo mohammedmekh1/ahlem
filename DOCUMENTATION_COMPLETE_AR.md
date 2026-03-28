@@ -77,6 +77,9 @@
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: مفتاح Anon الخاص بـ Supabase.
 - `PRIVATE_SUPABASE_SERVICE_KEY`: مفتاح Service Role (للعمليات الخلفية والتصحيح).
 - `NEXT_PUBLIC_PRODUCTNAME`: "منصة أحلام".
+- `ENCRYPTION_SECRET`: مفتاح سري لتشفير مفاتيح Gemini (اختياري، يستخدم Service Key كبديل).
+- `ENCRYPTION_SALT`: ملح التشفير لزيادة الأمان.
+- `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`: إعدادات إرسال البريد الإلكتروني (Gmail).
 
 ### **ب- تفعيل قاعدة البيانات (Migrations):**
 يجب تشغيل ملفات Migration الموجودة في `supabase/migrations/` بالترتيب:
@@ -90,8 +93,8 @@
 ### **ج- تشغيل المنصة محلياً:**
 ```bash
 cd nextjs
-yarn install
-yarn dev
+npm install
+npm run dev
 ```
 
 ---
