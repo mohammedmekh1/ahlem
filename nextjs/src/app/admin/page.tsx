@@ -1,10 +1,24 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Users, Shield, Activity } from 'lucide-react';
+import { InviteUserForm } from '@/components/invitations/InviteUserForm';
+import { InvitationList } from '@/components/invitations/InvitationList';
+import { createClient } from '@/lib/supabase/client';
 
 export default function AdminDashboard() {
+  const [organizations, setOrganizations] = useState<any[]>([]);
+  const supabase = createClient();
+
+  useEffect(() => {
+    async function fetchOrgs() {
+      const { data } = await supabase.from('organizations').select('id, name');
+      if (data) setOrganizations(data);
+    }
+    fetchOrgs();
+  }, [supabase]);
+
   const stats = [
     { name: 'Total Users', value: '0', icon: Users },
     { name: 'Active Sessions', value: '0', icon: Activity },
@@ -27,6 +41,14 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <InviteUserForm
+          organizations={organizations}
+          allowedRoles={['admin', 'teacher', 'assistant', 'member']}
+        />
+        <InvitationList />
       </div>
 
       <Card>

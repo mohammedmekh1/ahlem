@@ -131,7 +131,7 @@
 
 ```bash
 cd supabase-expo-template
-yarn install
+npm install
 ```
 
 ### 3. 配置环境

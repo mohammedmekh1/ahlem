@@ -27,7 +27,7 @@
 2.  **تثبيت المكتبات:**
     ```bash
     cd nextjs
-    yarn install
+    npm install
     ```
 
 ---

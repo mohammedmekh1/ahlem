@@ -16,8 +16,42 @@ export default function UserSettingsPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [geminiKey, setGeminiKey] = useState('');
 
+    useEffect(() => {
+        async function fetchSettings() {
+            if (!user) return;
+            const supabase = await createSPASaaSClient();
+            const { data } = await supabase.getSupabaseClient()
+                .from('profiles')
+                .select('encrypted_gemini_key')
+                .eq('id', user.id)
+                .single();
+            if (data?.encrypted_gemini_key) {
+                setGeminiKey('********'); // Don't show the real key
+            }
+        }
+        fetchSettings();
+    }, [user]);
 
+    const handleSaveGeminiKey = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            const res = await fetch('/api/user/settings/gemini-key', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ key: geminiKey })
+            });
+            const data = await res.json();
+            if (data.error) throw new Error(data.error);
+            setSuccess('Gemini API Key saved successfully');
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handlePasswordChange = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -144,6 +178,41 @@ export default function UserSettingsPage() {
                                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
                                 >
                                     {loading ? '...' : t('update_password')}
+                                </button>
+                            </form>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <Key className="h-5 w-5" />
+                                إعدادات الذكاء الاصطناعي
+                            </CardTitle>
+                            <CardDescription>أدخل مفتاح Gemini API الخاص بك لتفعيل ميزات توليد الأسئلة الذكية.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <form onSubmit={handleSaveGeminiKey} className="space-y-4">
+                                <div>
+                                    <label htmlFor="gemini-key" className="block text-sm font-medium text-gray-700">
+                                        Gemini API Key
+                                    </label>
+                                    <input
+                                        type="password"
+                                        id="gemini-key"
+                                        value={geminiKey}
+                                        onChange={(e) => setGeminiKey(e.target.value)}
+                                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-primary-500 text-sm"
+                                        placeholder="AIza..."
+                                        required
+                                    />
+                                </div>
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
+                                >
+                                    حفظ المفتاح
                                 </button>
                             </form>
                         </CardContent>

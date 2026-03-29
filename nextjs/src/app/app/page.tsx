@@ -1,9 +1,12 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGlobal } from '@/lib/context/GlobalContext';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { CalendarDays, Settings, ExternalLink, BarChart3 } from 'lucide-react';
+import { CalendarDays, Settings, ExternalLink, BarChart3, Bell } from 'lucide-react';
 import Link from 'next/link';
+import { InviteUserForm } from '@/components/invitations/InviteUserForm';
+import { InvitationList } from '@/components/invitations/InvitationList';
+import { createClient } from '@/lib/supabase/client';
 import {
     BarChart,
     Bar,
@@ -27,6 +30,42 @@ const mockActivityData = [
 
 export default function DashboardContent() {
     const { loading, user } = useGlobal();
+    const [organizations, setOrganizations] = useState<any[]>([]);
+    const [notifications, setNotifications] = useState<any[]>([]);
+    const supabase = createClient();
+
+    useEffect(() => {
+        async function fetchNotifications() {
+            if (!user) return;
+            const { data } = await supabase
+                .from('notifications')
+                .select('*')
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: false })
+                .limit(5);
+            if (data) setNotifications(data);
+        }
+        fetchNotifications();
+    }, [user, supabase]);
+
+    useEffect(() => {
+        async function fetchMyOrgs() {
+            if (!user) return;
+            const { data } = await supabase
+                .from('organization_members')
+                .select('organization_id, role, organizations(name)')
+                .eq('user_id', user.id);
+
+            if (data) {
+                // Filter where role is teacher, admin or owner
+                const leadOrgs = data
+                    .filter(m => ['owner', 'admin', 'teacher'].includes(m.role))
+                    .map(m => ({ id: m.organization_id, name: (m as any).organizations.name }));
+                setOrganizations(leadOrgs);
+            }
+        }
+        fetchMyOrgs();
+    }, [user, supabase]);
 
     const getDaysSinceRegistration = () => {
         if (!user?.registered_at) return 0;
@@ -48,6 +87,25 @@ export default function DashboardContent() {
     return (
         <div className="space-y-6 p-6">
             <div className="grid gap-6 md:grid-cols-2">
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">الإشعارات الأخيرة</CardTitle>
+                        <Bell className="h-4 w-4 text-primary-600" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            {notifications.length > 0 ? notifications.map(n => (
+                                <div key={n.id} className="text-sm border-b pb-2 last:border-0">
+                                    <p className="font-bold">{n.title}</p>
+                                    <p className="text-gray-500 text-xs">{n.message}</p>
+                                </div>
+                            )) : (
+                                <p className="text-gray-400 text-sm">لا توجد إشعارات حالياً</p>
+                            )}
+                        </div>
+                    </CardContent>
+                </Card>
+
                 <Card>
                     <CardHeader>
                         <CardTitle>Welcome, {user?.email?.split('@')[0]}! 👋</CardTitle>
@@ -121,6 +179,16 @@ export default function DashboardContent() {
                     </div>
                 </CardContent>
             </Card>
+
+            {organizations.length > 0 && (
+                <div className="grid gap-6 md:grid-cols-2">
+                    <InviteUserForm
+                        organizations={organizations}
+                        allowedRoles={['assistant', 'member']}
+                    />
+                    <InvitationList organizationId={organizations[0].id} />
+                </div>
+            )}
 
             {/* Quick Actions */}
             <Card>

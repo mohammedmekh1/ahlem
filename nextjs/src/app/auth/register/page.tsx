@@ -1,8 +1,8 @@
 'use client';
 
-import {createSPASaaSClient} from '@/lib/supabase/client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import {createSPASaaSClient, createClient} from '@/lib/supabase/client';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import SSOButtons from "@/components/SSOButtons";
 
@@ -14,6 +14,27 @@ export default function RegisterPage() {
     const [loading, setLoading] = useState(false);
     const [acceptedTerms, setAcceptedTerms] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const token = searchParams.get('token');
+
+    useEffect(() => {
+        async function checkToken() {
+            if (token) {
+                const supabase = createClient();
+                const { data, error } = await supabase
+                    .from('invitations')
+                    .select('email')
+                    .eq('token', token)
+                    .eq('status', 'pending')
+                    .single();
+
+                if (data) {
+                    setEmail(data.email);
+                }
+            }
+        }
+        checkToken();
+    }, [token]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -32,10 +53,23 @@ export default function RegisterPage() {
         setLoading(true);
 
         try {
-            const supabase = await createSPASaaSClient();
-            const { error } = await supabase.registerEmail(email, password);
+            const saasClient = await createSPASaaSClient();
+            const { data: authData, error } = await saasClient.registerEmail(email, password);
 
             if (error) throw error;
+
+            if (token && authData?.user) {
+                const supabase = createClient();
+                // We need to handle the invitation acceptance.
+                // Since this is client side, and we might not be logged in yet (need verification),
+                // it's better to handle this in a trigger or a more secure way.
+                // However, for this MVP, we will try to call an edge function or a server action.
+                await fetch('/api/invitations/accept', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token, user_id: authData.user.id }),
+                });
+            }
 
             router.push('/auth/verify-email');
         } catch (err: Error | unknown) {

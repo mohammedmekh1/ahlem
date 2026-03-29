@@ -47,7 +47,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
     const navigation = [
         { name: 'Dashboard', href: '/app', icon: Home },
-        { name: 'AI Assistant', href: '/app/ai', icon: LucideListTodo },
+        { name: 'Exams', href: '/app/exams', icon: Files },
+        { name: 'Question Bank', href: '/app/question-bank', icon: Brain },
+        { name: 'Grading', href: '/app/grading', icon: ShieldCheck },
+        { name: 'Analytics', href: '/app/analytics', icon: BarChart3 },
+        { name: 'Team', href: '/app/team', icon: Users },
         { name: 'Storage', href: '/app/storage', icon: Files },
         { name: 'User Settings', href: '/app/user-settings', icon: User },
         { name: 'Admin Panel', href: '/admin', icon: Shield },
