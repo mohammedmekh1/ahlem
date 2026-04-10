@@ -1,96 +1,59 @@
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { GraduationCap } from 'lucide-react';
 
-export default function AuthLayout({
-                                       children,
-                                   }: {
-    children: React.ReactNode;
-}) {
-    const productName = process.env.NEXT_PUBLIC_PRODUCTNAME;
-    const testimonials = [
-        {
-            quote: "This template helped us launch our SaaS product in just two weeks. The authentication and multi-tenancy features are rock solid.",
-            author: "Sarah Chen",
-            role: "CTO, TechStart",
-            avatar: "SC"
-        },
-        {
-            quote: "The best part is how well thought out the organization management is. It saved us months of development time.",
-            author: "Michael Roberts",
-            role: "Founder, DataFlow",
-            avatar: "MR"
-        },
-        {
-            quote: "Clean code, great documentation, and excellent support. Exactly what we needed to get our MVP off the ground.",
-            author: "Jessica Kim",
-            role: "Lead Developer, CloudScale",
-            avatar: "JK"
-        }
-    ];
-
-    return (
-        <div className="flex min-h-screen">
-            <div className="w-full lg:w-1/2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white relative">
-                <Link
-                    href="/"
-                    className="absolute left-8 top-8 flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back to Homepage
-                </Link>
-
-                <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                    <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
-                        {productName}
-                    </h2>
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen flex" style={{ background: 'linear-gradient(135deg,#f8fafc 0%,#f0f4ff 100%)' }}>
+      {/* Left Panel */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden" style={{ background: 'linear-gradient(135deg,#1e1b4b,#312e81,#4c1d95)' }}>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-12">
+          <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center mb-6">
+            <GraduationCap className="h-9 w-9 text-white" />
+          </div>
+          <h2 className="text-3xl font-bold mb-4 text-center">مرحباً بك في EXAM</h2>
+          <p className="text-white/70 text-center max-w-sm leading-relaxed">
+            منصة التعليم الإلكتروني الأكثر تطوراً في الجزائر. سجّل دخولك وابدأ رحلتك التعليمية.
+          </p>
+          <div className="mt-12 space-y-4 w-full max-w-sm">
+            {[
+              ['🎓', 'دورات تعليمية متخصصة', 'محتوى موثوق ومحدّث'],
+              ['🧠', 'اختبارات تفاعلية',      'تقييم فوري ودقيق'],
+              ['📊', 'تحليلات متقدمة',         'تتبع تقدمك بسهولة'],
+            ].map(([emoji, title, desc], i) => (
+              <div key={i} className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-xl p-4">
+                <span className="text-2xl">{emoji}</span>
+                <div>
+                  <p className="text-white font-medium text-sm">{title}</p>
+                  <p className="text-white/50 text-xs">{desc}</p>
                 </div>
-
-                <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                    {children}
-                </div>
-            </div>
-
-            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-600 to-primary-800">
-                <div className="w-full flex items-center justify-center p-12">
-                    <div className="space-y-6 max-w-lg">
-                        <h3 className="text-white text-2xl font-bold mb-8">
-                            Trusted by developers worldwide
-                        </h3>
-                        {testimonials.map((testimonial, index) => (
-                            <div
-                                key={index}
-                                className="relative bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 shadow-xl"
-                            >
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0">
-                                        <div className="w-10 h-10 rounded-full bg-primary-400/30 flex items-center justify-center text-white font-semibold">
-                                            {testimonial.avatar}
-                                        </div>
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <p className="text-sm text-white/90 mb-2 font-light leading-relaxed">
-                                            &#34;{testimonial.quote}&#34;
-                                        </p>
-                                        <div className="mt-3">
-                                            <p className="text-sm font-medium text-white">
-                                                {testimonial.author}
-                                            </p>
-                                            <p className="text-sm text-primary-200">
-                                                {testimonial.role}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                        <div className="mt-8 text-center">
-                            <p className="text-primary-100 text-sm">
-                                Join thousands of developers building with {productName}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+              </div>
+            ))}
+          </div>
         </div>
-    );
+        {/* Decorative circles */}
+        <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-purple-500/10 -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-indigo-500/10 translate-y-1/2 -translate-x-1/2" />
+      </div>
+
+      {/* Right Panel */}
+      <div className="w-full lg:w-1/2 flex flex-col">
+        <div className="flex items-center justify-between p-6 lg:p-8">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+              <GraduationCap className="h-5 w-5 text-white" />
+            </div>
+            <span className="text-xl font-bold text-gray-900">EXAM</span>
+          </Link>
+        </div>
+        <div className="flex-1 flex items-center justify-center p-6 lg:p-8">
+          <div className="w-full max-w-md">
+            {children}
+          </div>
+        </div>
+        <div className="p-6 text-center text-xs text-gray-400">
+          © {new Date().getFullYear()} EXAM Platform. جميع الحقوق محفوظة.
+        </div>
+      </div>
+    </div>
+  );
 }
