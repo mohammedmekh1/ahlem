@@ -1,41 +1,27 @@
-'use client'
+'use client';
+import { useEffect } from 'react';
+import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
 
-import { useEffect } from 'react'
-import { Button } from '@/components/ui/button'
-
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string }
-  reset: () => void
-}) {
-  useEffect(() => {
-    console.error(error)
-  }, [error])
-
+export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+  useEffect(() => { console.error(error); }, [error]);
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4">
-      <div className="text-center">
-        <h2 className="mb-4 text-3xl font-bold text-gray-900">Something went wrong!</h2>
-        <p className="mb-8 text-gray-600">
-          We apologize for the inconvenience. An unexpected error has occurred.
-        </p>
-        <div className="flex justify-center gap-4">
-          <Button
-            onClick={() => reset()}
-            variant="default"
-          >
-            Try again
-          </Button>
-          <Button
-            onClick={() => window.location.href = '/'}
-            variant="outline"
-          >
-            Go back home
-          </Button>
+    <div className="flex min-h-screen flex-col items-center justify-center px-4 bg-gray-50">
+      <div className="exam-card p-10 text-center max-w-md">
+        <div className="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center mx-auto mb-4">
+          <AlertTriangle className="h-9 w-9 text-red-500" />
+        </div>
+        <h2 className="text-xl font-bold text-gray-900 mb-2">حدث خطأ غير متوقع</h2>
+        <p className="text-gray-500 text-sm mb-6">نعتذر عن الإزعاج. يرجى المحاولة مرة أخرى.</p>
+        {error.digest && <p className="text-xs text-gray-300 mb-6 font-mono">رمز الخطأ: {error.digest}</p>}
+        <div className="flex gap-3 justify-center">
+          <button onClick={() => reset()} className="exam-btn-primary">
+            <RefreshCw className="h-4 w-4" /> إعادة المحاولة
+          </button>
+          <button onClick={() => window.location.href = '/'} className="exam-btn-secondary">
+            <Home className="h-4 w-4" /> الرئيسية
+          </button>
         </div>
       </div>
     </div>
-  )
+  );
 }

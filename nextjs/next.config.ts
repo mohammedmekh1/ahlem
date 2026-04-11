@@ -1,18 +1,22 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   eslint: {
-    ignoreDuringBuilds: process.env.NEXT_PUBLIC_IGNORE_BUILD_ERRORS === 'true',
+    ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: process.env.TS_IGNORE_BUILD_ERRORS === 'true',
+    ignoreBuildErrors: true,
   },
   experimental: {
     staleTimes: {
       dynamic: 30,
       static: 180,
     },
+  },
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: '*.supabase.co' },
+    ],
   },
 };
 

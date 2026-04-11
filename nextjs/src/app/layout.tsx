@@ -1,34 +1,35 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "@/lib/i18n";
-import { Analytics } from '@vercel/analytics/next';
-import CookieConsent from "@/components/Cookies";
-import { GoogleAnalytics } from '@next/third-parties/google'
-
 
 export const metadata: Metadata = {
-  title: process.env.NEXT_PUBLIC_PRODUCTNAME,
-  description: "The best way to build your SaaS product.",
+  title: "EXAM - منصة التعليم الإلكتروني",
+  description: "منصة EXAM المتكاملة للتعليم الإلكتروني وإدارة الاختبارات والدورات التدريبية",
+  keywords: "تعليم إلكتروني, اختبارات, دورات, EXAM, e-learning",
+  authors: [{ name: "EXAM Platform" }],
+  openGraph: {
+    title: "EXAM - منصة التعليم الإلكتروني",
+    description: "منصة متكاملة للتعليم الإلكتروني وإدارة الاختبارات",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const theme = process.env.NEXT_PUBLIC_THEME || "theme-sass3";
-  const gaID = process.env.NEXT_PUBLIC_GOOGLE_TAG;
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-    <body className={theme}>
-      {children}
-      <Analytics />
-      <CookieConsent />
-      { gaID && (
-          <GoogleAnalytics gaId={gaID}/>
-      )}
-
-    </body>
+    <html lang="ar" dir="auto">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="antialiased">
+        {children}
+      </body>
     </html>
   );
 }
