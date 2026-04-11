@@ -8,18 +8,19 @@ import resourcesToBackend from 'i18next-resources-to-backend';
 i18next
   .use(initReactI18next)
   .use(LanguageDetector)
-  .use(resourcesToBackend((language: string, namespace: string) => import(`@/locales/${language}/${namespace}.json`)))
+  .use(resourcesToBackend((language: string, namespace: string) =>
+    import(`@/locales/${language}/${namespace}.json`)
+      .catch(() => import('@/locales/ar/common.json'))
+  ))
   .init({
     fallbackLng: 'ar',
-    supportedLngs: ['ar', 'en', 'fr'],
+    supportedLngs: ['ar', 'en', 'fr', 'es', 'tr', 'de'],
     ns: ['common'],
     defaultNS: 'common',
-    interpolation: {
-      escapeValue: false,
-    },
+    interpolation: { escapeValue: false },
     detection: {
-      order: ['path', 'cookie', 'htmlTag', 'localStorage', 'subdomain'],
-      caches: ['cookie'],
+      order: ['cookie', 'localStorage', 'htmlTag'],
+      caches: ['cookie', 'localStorage'],
     },
   });
 

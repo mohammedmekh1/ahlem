@@ -1,74 +1,86 @@
-// src/lib/context/GlobalContext.tsx
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { createSPASaaSClientAuthenticated as createSPASaaSClient } from '@/lib/supabase/client';
 
+export type UserRole = 'owner' | 'admin' | 'teacher' | 'student';
+export type UserPlan = 'free' | 'pro' | 'enterprise';
 
-type User = {
-    email: string;
-    id: string;
-    registered_at: Date;
-    is_admin?: boolean;
+export type User = {
+  id:            string;
+  email:         string;
+  full_name:     string | null;
+  role:          UserRole;
+  plan:          UserPlan;
+  is_admin:      boolean;
+  is_active:     boolean;
+  avatar_url:    string | null;
+  registered_at: Date;
 };
 
 interface GlobalContextType {
-    loading: boolean;
-    user: User | null;  // Add this
+  loading:     boolean;
+  user:        User | null;
+  refetchUser: () => Promise<void>;
 }
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 
 export function GlobalProvider({ children }: { children: React.ReactNode }) {
-    const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<User | null>(null);  // Add this
+  const [loading, setLoading] = useState(true);
+  const [user,    setUser]    = useState<User | null>(null);
 
-    useEffect(() => {
-        async function loadData() {
-            try {
-                const supabase = await createSPASaaSClient();
-                const client = supabase.getSupabaseClient();
+  const loadData = useCallback(async () => {
+    try {
+      const supabase = await createSPASaaSClient();
+      const client   = supabase.getSupabaseClient();
 
-                // Get user data
-                const { data: { user } } = await client.auth.getUser();
-                if (user) {
-                    const { data: profile } = await client
-                        .from('profiles')
-                        .select('is_admin')
-                        .eq('id', user.id)
-                        .single();
+      const { data: { user: authUser } } = await client.auth.getUser();
+      if (!authUser) throw new Error('Not authenticated');
 
-                    setUser({
-                        email: user.email!,
-                        id: user.id,
-                        registered_at: new Date(user.created_at),
-                        is_admin: profile?.is_admin || false
-                    });
-                } else {
-                    throw new Error('User not found');
-                }
+      const { data: profile } = await client
+        .from('profiles')
+        .select('*')
+        .eq('id', authUser.id)
+        .single();
 
-            } catch (error) {
-                console.error('Error loading data:', error);
-            } finally {
-                setLoading(false);
-            }
-        }
+      setUser({
+        id:            authUser.id,
+        email:         authUser.email!,
+        full_name:     profile?.full_name ?? null,
+        role:          (profile?.role as UserRole) ?? 'student',
+        plan:          (profile?.plan as UserPlan) ?? 'free',
+        is_admin:      profile?.is_admin ?? false,
+        is_active:     profile?.is_active ?? true,
+        avatar_url:    profile?.avatar_url ?? null,
+        registered_at: new Date(authUser.created_at),
+      });
+    } catch (err) {
+      console.error('GlobalContext error:', err);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-        loadData();
-    }, []);
+  useEffect(() => { loadData(); }, [loadData]);
 
-    return (
-        <GlobalContext.Provider value={{ loading, user }}>
-            {children}
-        </GlobalContext.Provider>
-    );
+  return (
+    <GlobalContext.Provider value={{ loading, user, refetchUser: loadData }}>
+      {children}
+    </GlobalContext.Provider>
+  );
 }
 
 export const useGlobal = () => {
-    const context = useContext(GlobalContext);
-    if (context === undefined) {
-        throw new Error('useGlobal must be used within a GlobalProvider');
-    }
-    return context;
+  const ctx = useContext(GlobalContext);
+  if (!ctx) throw new Error('useGlobal must be used within GlobalProvider');
+  return ctx;
 };
+
+// Role helpers
+export const isOwner   = (u: User | null) => u?.role === 'owner';
+export const isAdmin   = (u: User | null) => u?.role === 'owner' || u?.role === 'admin';
+export const isTeacher = (u: User | null) => u?.role === 'teacher' || isAdmin(u);
+export const isStudent = (u: User | null) => u?.role === 'student';
+export const isPro     = (u: User | null) => u?.plan === 'pro' || u?.plan === 'enterprise';
