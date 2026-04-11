@@ -1,103 +1,88 @@
-# Privacy Notice
+# سياسة الخصوصية لمنصة EXAM
 
-Last Updated: December 14, 2024
+آخر تحديث: أبريل 2025
 
-## 1. Company Information
+## 1. معلومات المنصة
 
-This Privacy Notice applies to:
-Company Name:
+تُطبَّق سياسة الخصوصية هذه على منصة **EXAM** للتعليم الإلكتروني وإدارة الاختبارات.
 
-Tax number: 1234567890
+---
 
-## 2. Introduction
+## 2. المقدمة
 
-This Privacy Notice explains how we collect, use, disclose, and safeguard your information when you use SupaSasS services.
+تُوضّح هذه السياسة كيفية جمع معلوماتك واستخدامها والكشف عنها وحمايتها عند استخدامك لخدمات منصة EXAM.
 
-## 3. Information We Collect
+نحن نأخذ خصوصيتك على محمل الجد ونلتزم بحماية بياناتك الشخصية وفقاً للأنظمة المعمول بها.
 
-### 3.1 Personal Information
-- Email address
-- Account credentials
-- Payment information (processed by Paddle)
-- Usage data
+---
 
-### 3.2 Business Information
-- Shopify store data (when using analysis tools)
-- Domain search queries
-- Analytics data
+## 3. المعلومات التي نجمعها
 
-### 3.3 Technical Information
-- IP address
-- Browser type
-- Device information
-- Cookies and similar technologies
+### 3.1 المعلومات الشخصية
+- عنوان البريد الإلكتروني
+- بيانات اعتماد الحساب (كلمة مرور مُشفَّرة)
+- الاسم (اختياري)
 
-## 4. How We Use Your Information
+### 3.2 بيانات الاستخدام
+- سجلات نشاط التعلم والاختبارات
+- درجات الاختبارات ونتائجها
+- وقت الجلسة وبيانات الأداء
 
-We use collected information for:
-- Providing and maintaining our services
-- Processing payments
-- Improving our services
-- Communicating with you
-- Analyzing usage patterns
-- Preventing fraud
+### 3.3 بيانات تقنية
+- عنوان IP
+- نوع المتصفح ونظام التشغيل
+- ملفات تعريف الارتباط (Cookies)
 
-## 5. Data Storage and Security
+---
 
-### 5.1 Storage
-- Data is stored on secure servers
-- We use Supabase for database management
-- Payment data is handled by Paddle
+## 4. كيف نستخدم معلوماتك
 
-### 5.2 Security Measures
-- Encryption in transit and at rest
-- Regular security audits
-- Access controls and monitoring
+- **تقديم الخدمة:** تشغيل منصة التعليم وإدارة حسابك
+- **التحليل:** تحسين تجربة التعلم والمنصة
+- **التواصل:** إرسال إشعارات الاختبارات والتحديثات
+- **الأمان:** الكشف عن الاحتيال وحماية الحسابات
 
-## 6. Data Sharing and Disclosure
+---
 
-We may share information with:
-- Service providers (Paddle, Supabase)
-- Legal authorities when required
-- Business partners with your consent
+## 5. مشاركة المعلومات
 
-## 7. Your Rights
+لا نبيع معلوماتك الشخصية لأطراف ثالثة.  
+قد نشارك البيانات مع:
+- مزودي الخدمة التقنية (Supabase لقواعد البيانات)
+- السلطات القانونية عند الطلب القانوني
 
-You have the right to:
-- Access your personal data
-- Correct inaccurate data
-- Request data deletion
-- Object to processing
-- Data portability
+---
 
-## 8. Cookies and Tracking
+## 6. حماية البيانات
 
-We use cookies for:
-- Authentication
-- Preferences
-- Analytics
-- Marketing (with consent)
+- تشفير البيانات أثناء النقل (TLS/SSL)
+- تشفير كلمات المرور
+- مصادقة ثنائية العامل (MFA)
+- نسخ احتياطي منتظم
 
-## 9. International Data Transfers
+---
 
-- Data may be processed in various locations
-- We ensure appropriate safeguards
-- EU data protection standards applied
+## 7. حقوقك
 
-## 10. Children's Privacy
+- **الوصول:** طلب نسخة من بياناتك
+- **التصحيح:** تحديث معلوماتك
+- **الحذف:** حذف حسابك وبياناتك
+- **الاعتراض:** الاعتراض على معالجة بياناتك
 
-- Services not intended for users under 18
-- We do not knowingly collect children's data
-- Parents may request data deletion
+للتواصل بشأن خصوصيتك: **privacy@exam.dz**
 
-## 11. Changes to Privacy Notice
+---
 
-- We may update this notice periodically
-- Changes effective upon posting
-- Material changes notified via email
+## 8. ملفات تعريف الارتباط
 
-## 12. Contact Information
+نستخدم ملفات الارتباط الضرورية لتشغيل المنصة، وملفات تحليلية لتحسين التجربة.
 
-For privacy-related questions:
-Email: contact@supasass.com
+---
 
+## 9. تحديثات السياسة
+
+قد نحدّث هذه السياسة. سنُخطرك بأي تغييرات جوهرية عبر البريد الإلكتروني أو إشعار على المنصة.
+
+---
+
+© 2025 EXAM Platform. جميع الحقوق محفوظة.

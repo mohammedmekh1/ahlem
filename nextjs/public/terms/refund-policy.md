@@ -1,85 +1,55 @@
-# Refund Policy
+# سياسة الاسترداد لمنصة EXAM
 
-Last Updated: December 14, 2024
+آخر تحديث: أبريل 2025
 
-## 1. Company Information
+---
 
-Company Name:
+## 1. نظرة عامة
 
-Tax number: 1234567890
+نحن في منصة EXAM نسعى لضمان رضاك التام. تُحدد هذه السياسة شروط استرداد المبالغ المدفوعة.
 
-## 2. General Policy
+---
 
-We strive to ensure customer satisfaction with all our digital services and products. This policy outlines our procedures for refunds and cancellations.
+## 2. الاسترداد خلال 14 يوماً
 
-## 3. Subscription Services
+إذا لم تكن راضياً عن خدمتنا المدفوعة، يمكنك طلب استرداد كامل خلال **14 يوماً** من تاريخ الاشتراك، شريطة:
+- عدم استخدام أكثر من 20% من محتوى الخطة
+- عدم تحميل ملفات بحجم يتجاوز 1 جيجابايت
 
-### 3.1 Cancellation
-- You may cancel your subscription at any time
-- Access continues until the end of the billing period
-- No partial refunds for unused time
+---
 
-### 3.2 Automatic Renewals
-- Subscriptions renew automatically
-- Cancel at least 24 hours before renewal
-- No refunds for automatic renewals
+## 3. الاستردادات الجزئية
 
-## 4. Data Products
+بعد 14 يوماً وحتى 30 يوماً، يمكن النظر في استرداد جزئي يُحسب بناءً على:
+- مدة الاستخدام الفعلي
+- المحتوى الذي تم الوصول إليه
 
-### 4.1 Digital Products
-- Data products are non-refundable once delivered
-- Sample data available before purchase
-- Technical support provided for access issues
+---
 
-### 4.2 Custom Data Solutions
-- Custom orders are non-refundable
-- Requirements confirmed before processing
-- Revision period available
+## 4. الحالات غير المشمولة
 
-## 5. Refund Eligibility
+لا يُتاح الاسترداد في الحالات التالية:
+- بعد مرور أكثر من 30 يوماً من الاشتراك
+- انتهاك شروط الاستخدام
+- الاشتراكات السنوية بعد أول 30 يوماً
 
-Refunds may be considered for:
-- Technical issues preventing access
-- Service unavailability
-- Incorrect charges
-- Legal requirements
+---
 
-## 6. Refund Process
+## 5. كيفية طلب الاسترداد
 
-To request a refund:
-1. Contact support within 14 days
-2. Provide order details
-3. Explain refund reason
-4. Allow 5-10 business days for processing
+1. أرسل بريداً إلكترونياً إلى **support@exam.dz**
+2. أذكر رقم الفاتورة وسبب طلب الاسترداد
+3. سيتم الرد خلال **3-5 أيام عمل**
+4. سيتم معالجة الاسترداد خلال **7-14 يوم عمل**
 
-## 7. Payment Processing
+---
 
-### 7.1 Refund Method
-- Refunds processed through original payment method
-- Processed via Paddle
-- Currency same as original payment
+## 6. التحديثات
 
-### 7.2 Processing Time
-- 2-5 business days for approval
-- 5-10 business days for bank processing
-- May vary by payment method
+نحتفظ بحق تعديل هذه السياسة. أي تغييرات ستُطبَّق على الاشتراكات الجديدة فقط.
 
-## 8. Exceptions
+---
 
-No refunds for:
-- Used or accessed digital products
-- Expired subscriptions
-- Violations of Terms of Service
-- Fraudulent activities
+للاستفسارات: **support@exam.dz**
 
-## 9. Customer Support
-
-For refund requests contact:
-Email: contact@komiru.com
-
-## 10. Changes to Policy
-
-- We reserve the right to modify this policy
-- Changes effective upon posting
-- Current customers notified of material changes
-
+© 2025 EXAM Platform. جميع الحقوق محفوظة.

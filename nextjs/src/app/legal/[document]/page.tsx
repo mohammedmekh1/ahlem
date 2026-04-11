@@ -1,50 +1,21 @@
 'use client';
-
 import React from 'react';
 import LegalDocument from '@/components/LegalDocument';
 import { notFound } from 'next/navigation';
 
 const legalDocuments = {
-    'privacy': {
-        title: 'Privacy Notice',
-        path: '/terms/privacy-notice.md'
-    },
-    'terms': {
-        title: 'Terms of Service',
-        path: '/terms/terms-of-service.md'
-    },
-    'refund': {
-        title: 'Refund Policy',
-        path: '/terms/refund-policy.md'
-    }
+  privacy: { title: 'سياسة الخصوصية',  path: '/terms/privacy-notice.md' },
+  terms:   { title: 'شروط الاستخدام',  path: '/terms/terms-of-service.md' },
+  refund:  { title: 'سياسة الاسترداد', path: '/terms/refund-policy.md' },
 } as const;
 
-type LegalDocument = keyof typeof legalDocuments;
+type DocKey = keyof typeof legalDocuments;
 
-interface LegalPageProps {
-    document: LegalDocument;
-    lng: string;
-}
-
-interface LegalPageParams {
-    params: Promise<LegalPageProps>
-}
+interface LegalPageParams { params: Promise<{ document: DocKey }> }
 
 export default function LegalPage({ params }: LegalPageParams) {
-    const {document} = React.use<LegalPageProps>(params);
-
-    if (!legalDocuments[document]) {
-        notFound();
-    }
-
-    const { title, path } = legalDocuments[document];
-
-    return (
-        <div className="container mx-auto px-4 py-8">
-            <LegalDocument
-                title={title}
-                filePath={path}
-            />
-        </div>
-    );
+  const { document } = React.use(params);
+  if (!legalDocuments[document]) notFound();
+  const { title, path } = legalDocuments[document];
+  return <LegalDocument title={title} filePath={path} />;
 }
