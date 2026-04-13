@@ -4,8 +4,9 @@ import { updateSession } from '@/lib/supabase/middleware'
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Public exam routes — no auth needed
-  if (pathname.startsWith('/exam/') || pathname.startsWith('/api/exam/')) {
+  // Routes that don't need auth
+  const publicRoutes = ['/exam/', '/api/exam/', '/pricing', '/api/stripe/webhook'];
+  if (publicRoutes.some(r => pathname.startsWith(r))) {
     return NextResponse.next();
   }
 

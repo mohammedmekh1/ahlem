@@ -1,6 +1,6 @@
 {
   "name": "exam-platform",
-  "version": "0.1.0",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -52,5 +52,6 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5",
     "vitest": "^4.0.18"
-  }
+  },
+  "description": "EXAM - منصة التعليم الإلكتروني المتكاملة"
 }
